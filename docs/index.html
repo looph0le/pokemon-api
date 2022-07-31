@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>WallHaven API Implementation</title>
+
+        <script defer src="https://unpkg.com/@alpinejs/intersect@3.x.x/dist/cdn.min.js"></script>
+
+        <script defer src="https://unpkg.com/alpinejs@3.10.3/dist/cdn.min.js"></script>
+        <script src="https://cdn.tailwindcss.com"></script>
+        <style type="text/css" media="screen">
+@import url('https://fonts.googleapis.com/css2?family=Josefin+Sans&display=swap');
+
+         * {
+             font-family: 'Josefin Sans', sans-serif;
+         }
+
+        </style>
+
+    </head>
+    <body class="bg-black/10">
+
+        <div class="flex justify-between bg-gray-900">
+            <h1 class="text-center text-3xl font-bold p-3 text-amber-400">PokeDex</h1>
+            <a href="https://github.com/looph0le" target="_blank" class="p-5 text-amber-400 text-xs">Made By Mitansh Panchal</a>
+        </div>
+
+
+        <div id="poke_container" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 m-1 text-center transition duration-1000" x-intersect="$el.classList.add('opacity-100', 'scale-100', 'blur-0')" >
+
+        </div>
+
+        <script type="text/javascript">
+
+         const poke_container = document.getElementById('poke_container');
+         const pokemon_number = 150;
+
+                const fetchPokemons = async () => {
+             for(let i=1; i<=pokemon_number;i++) {
+                 await getPokemon(i);
+             }
+         }
+
+         const getPokemon = async id => {
+             const url = `https://pokeapi.co/api/v2/pokemon/${id}`;
+             const res = await fetch(url);
+             const pokemon = await res.json();
+             createPokemonCard(pokemon);
+         }
+
+  function createPokemonCard(pokemon) {
+             const pokemonEl = document.createElement('div');
+             pokemonEl.classList.add('pokemon');
+
+             const name = pokemon.name[0].toUpperCase() + pokemon.name.slice(1);
+
+             const pokeInnerHTML = `
+                 <div class="img-container bg-black/80 rounded-lg m-3 p-3 shadow-lg shadow-black transition duration-1000 opacity-0 scale-0 blur-xl" x-intersect="$el.classList.add('opacity-100', 'scale-100', 'blur-0')">
+                     <div>
+                         <img class="rounded-xl w-40 mx-auto m-2" x-transition src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/home/${pokemon.id}.png" alt="name" />
+                     </div>
+
+                     <div class="text-white m-3 p-2 rounded">
+                        <a>${pokemon.id + '.'}</a>
+                        <a>${name}</a>
+                     </div>
+
+                 </div>
+             `;
+
+             pokemonEl.innerHTML = pokeInnerHTML;
+
+             poke_container.appendChild(pokemonEl);
+         }
+
+
+         fetchPokemons()
+
+
+
+        </script>
+    </body>
+</html>

@@ -56,7 +56,7 @@
              const name = pokemon.name[0].toUpperCase() + pokemon.name.slice(1);
 
              const pokeInnerHTML = `
-                 <div class="img-container bg-black/80 rounded-lg m-3 p-3 shadow-lg shadow-black transition duration-1000 opacity-0 scale-0 blur-xl" x-intersect="$el.classList.add('opacity-100', 'scale-100', 'blur-0')">
+                 <div class="img-container bg-black/80 rounded-lg m-3 p-3 shadow-lg shadow-black transition duration-1000 opacity-0 scale-0" x-intersect="$el.classList.add('opacity-100', 'scale-100'">
                      <div>
                          <img class="rounded-xl w-40 mx-auto m-2" x-transition src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/home/${pokemon.id}.png" alt="name" />
                      </div>
